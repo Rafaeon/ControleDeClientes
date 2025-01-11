@@ -17,8 +17,5 @@ namespace ControleDeContatos.Models
         [Required]
         public int ContatoId { get; set; }
 
-        // Navegação para o Contato
-        [ForeignKey("ContatoId")]
-        public ContatoModel Contato { get; set; }
     }
 }

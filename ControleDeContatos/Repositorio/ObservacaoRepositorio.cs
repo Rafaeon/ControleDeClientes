@@ -7,38 +7,50 @@ namespace ControleDeContatos.Repositorio
     {
         private readonly BancoContext _bancoContext;
 
+       
         public ObservacaoRepositorio(BancoContext bancoContext)
         {
             _bancoContext = bancoContext;
         }
 
-        public void AdicionarObservacao(ObservacaoModel observacao)
+        public ObservacaoModel Adicionar(ObservacaoModel observacao)
         {
             _bancoContext.Observacoes.Add(observacao);
             _bancoContext.SaveChanges();
+            return observacao;
         }
-
-        public List<ObservacaoModel> BuscarPorContatoId(int contatoId)
+        public ObservacaoModel ListarPorId(int id)
         {
-            return _bancoContext.Observacoes
-                .Where(o => o.ContatoId == contatoId)
-                .ToList();
+            return _bancoContext.Observacoes.FirstOrDefault(x => x.Id == id);
         }
-
-        public void AtualizarObservacao(ObservacaoModel observacao)
+        public List<ObservacaoModel> BuscarTodos(int contatoId)
         {
-            _bancoContext.Observacoes.Update(observacao);
+            return _bancoContext.Observacoes.Where(o => o.ContatoId == contatoId).ToList();
+        }
+        public void Atualizar(ObservacaoModel observacao)
+        {
+            ObservacaoModel observacaoDB = ListarPorId(observacao.Id);
+
+            if (observacaoDB == null) throw new Exception("Houve um erro na atualização do observacao!");
+
+            observacaoDB.Observacao = observacao.Observacao;
+            observacaoDB.DataAtendimento = observacao.DataAtendimento;
+
+            _bancoContext.Observacoes.Update(observacaoDB);
             _bancoContext.SaveChanges();
+            
         }
 
-        public void ApagarObservacao(int id)
+        public bool ApagarObs(int id)
         {
-            var observacao = _bancoContext.Observacoes.Find(id);
-            if (observacao != null)
-            {
-                _bancoContext.Observacoes.Remove(observacao);
-                _bancoContext.SaveChanges();
-            }
+            ObservacaoModel observacaoDB = ListarPorId(id);
+
+            if (observacaoDB == null) throw new Exception("Houve um erro na deleção do observacao!");
+
+            _bancoContext.Observacoes.Remove(observacaoDB);
+            _bancoContext.SaveChanges();
+
+            return true;
         }
     }
 }

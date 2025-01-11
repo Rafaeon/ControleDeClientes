@@ -4,9 +4,11 @@ namespace ControleDeContatos.Repositorio
 {
     public interface IObservacaoRepositorio
     {
-        void AdicionarObservacao(ObservacaoModel observacao);
-        List<ObservacaoModel> BuscarPorContatoId(int contatoId);
-        void AtualizarObservacao(ObservacaoModel observacao);
-        void ApagarObservacao(int id);
+        ObservacaoModel ListarPorId(int id);
+        List<ObservacaoModel> BuscarTodos(int contatoId);
+        ObservacaoModel Adicionar(ObservacaoModel observacao);
+        void Atualizar(ObservacaoModel observacao);
+        bool ApagarObs(int id);
+
     }
 }

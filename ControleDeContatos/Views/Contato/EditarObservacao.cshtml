@@ -1,0 +1,19 @@
+﻿@model ObservacaoModel
+
+<h2>Editar Observação</h2>
+
+<form asp-action="EditarObservacao" method="post">
+    <div class="form-group">
+        <label for="Observacao">Observação</label>
+        <input type="hidden" asp-for="ContatoId" value="@Model.ContatoId" />
+        <input type="text" asp-for="Observacao" class="form-control" placeholder="Digite a observação">
+        @Html.ValidationMessageFor(x => x.Observacao)
+    </div>
+    <div class="form-group">
+        <label for="DataAtendimento">Data Atendimento</label>
+        <input type="datetime-local" asp-for="DataAtendimento" class="form-control" />
+        @Html.ValidationMessageFor(x => x.DataAtendimento)
+    </div>
+    <button type="submit" class="btn btn-primary">Salvar</button>
+    <a class="btn btn-secondary" asp-action="Editar" asp-route-id="@Model.ContatoId">Cancelar</a>
+</form>

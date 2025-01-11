@@ -1,35 +1,109 @@
-﻿@model ContatoModel
+﻿
+
+@model ContatoViewModel
 @{
-    ViewData["Title"] = "Editar cliente";
+    ViewData["Title"] = "Editar Cliente";
 }
-<div class="text-center">
 
-    <h1 class="display-4">Editar Cliente</h1>
+<div class="container mt-4">
 
+    <!-- Título -->
+    <div class="text-center mb-4">
+        <h1 class="display-4">Editar Cliente</h1>
+    </div>
+
+    <!-- Formulário de Edição do Contato -->
+    <div class="card mb-4 shadow-sm">
+        <div class="card-header bg-primary text-white">
+            <h4>Dados do Cliente</h4>
+        </div>
+        <div class="card-body">
+            <form asp-controller="Contato" asp-action="Alterar" method="post">
+                <input type="hidden" id="hdnId" name="hdnId" value="@Model.Contato.Id" />
+                <input type="hidden" asp-for="Contato.Id" />
+
+                <div class="mb-3">
+                    <label for="nome" class="form-label">Nome</label>
+                    <input type="text" asp-for="Contato.Nome" class="form-control" placeholder="Digite o Nome do cliente">
+                    @Html.ValidationMessageFor(x => x.Contato.Nome)
+                </div>
+
+                <div class="mb-3">
+                    <label for="email" class="form-label">E-mail</label>
+                    <input type="text" asp-for="Contato.Email" class="form-control" placeholder="Digite o E-mail do cliente">
+                    @Html.ValidationMessageFor(x => x.Contato.Email)
+                </div>
+
+                <div class="mb-3">
+                    <label for="celular" class="form-label">Celular</label>
+                    <input type="text" asp-for="Contato.Celular" class="form-control" placeholder="Digite o Celular do cliente">
+                    @Html.ValidationMessageFor(x => x.Contato.Celular)
+                </div>
+
+                <div class="d-flex justify-content-between">
+                    <button type="submit" class="btn btn-primary">Alterar</button>
+                    <a class="btn btn-secondary" asp-controller="Contato" asp-action="Index" role="button">Voltar</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Formulário de Adição de Observação -->
+    <div class="card mb-4 shadow-sm">
+        <div class="card-header bg-secondary text-white">
+            <h4>Adicionar Observação</h4>
+        </div>
+        <div class="card-body">
+            <form id="formIncluirObservacao" name="formIncluirObservacao">
+                <div class="mb-3">
+                    <label for="txtObservacao" class="form-label">Observação</label>
+                    <input type="text" id="txtObservacao" class="form-control" placeholder="Digite a observação">
+                </div>
+                <div class="mb-3">
+                    <label for="txtDataAtendimento" class="form-label">Data de Atendimento</label>
+                    <input type="datetime-local" id="txtDataAtendimento" class="form-control" placeholder="Digite a data">
+                </div>
+                <button id="btn-incluirObservacao" type="submit" class="btn btn-primary">Adicionar</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Tabela de Observações -->
+    <div class="card shadow-sm">
+        <div class="card-header bg-success text-white">
+            <h4>Observações do Cliente</h4>
+        </div>
+        <div class="card-body">
+            <table class="table table-striped table-hover">
+                <thead class="table-dark">
+                    <tr>
+                        <th>#</th>
+                        <th>Observação</th>
+                        <th>Data de Atendimento</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (ObservacaoModel observacao in Model.Observacoes)
+                    {
+                        <tr>
+                            <td>@observacao.Id</td>
+                            <td>@observacao.Observacao</td>
+                            <td>@observacao.DataAtendimento?.ToString("dd/MM/yyyy HH:mm")</td>
+                            <td>
+                                <div class="btn-group">
+                                    <a role="button" class="btn btn-primary btn-sm" asp-route-id="@observacao.Id" asp-controller="Contato" asp-action="EditarObservacao">Editar</a>
+                                    <a role="button" class="btn btn-danger btn-sm" asp-route-id="@observacao.Id" asp-controller="Contato" asp-action="ApagarConfirmacaoObs">Apagar</a>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
 
-<form asp-controller="Contato" asp-action="Alterar" method="post">
-    <input type="hidden" asp-for="Id" />
-    <div class="form-group">
-        <label for="nome">Nome</label>
-        <input type="text" asp-for="Nome" class="form-control" placeholder="Digite o Nome do cliente">
-        @Html.ValidationMessageFor(x => x.Nome)
-
-    </div>
-    <div class="form-group">
-        <label for="email">E-mail</label>
-        <input type="text" asp-for="Email" class="form-control" placeholder="Digite o E-mail do cliente">
-        @Html.ValidationMessageFor(x => x.Email)
-
-    </div>
-    <div class="form-group">
-        <label for="celular">Celular</label>
-        <input type="text" asp-for="Celular" class="form-control" placeholder="Digite o Celular do cliente">
-        @Html.ValidationMessageFor(x => x.Celular)
-
-    </div>
-    <br />
-    <button type="submit" class="btn btn-primary">Alterar</button>
-    <a class="btn btn-secondary" asp-controller="Contato" asp-action="Index" role="button">Voltar</a>
-
-</form>
+@section Scripts {
+    <script rel="stylesheet" src="~/js/Contato/Edit.js" asp-append-version="true"></script>
+}

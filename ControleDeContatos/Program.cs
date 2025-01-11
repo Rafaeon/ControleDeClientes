@@ -17,6 +17,7 @@ builder.Services.AddDbContext<BancoContext>(options =>
 //injeção de dependencia
 builder.Services.AddScoped<IContatoRepositorio, ContatoRepositorio>();
 builder.Services.AddScoped<IUsuarioRepositorio, UsuarioRepositorio>();
+builder.Services.AddScoped<IObservacaoRepositorio, ObservacaoRepositorio>();
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 builder.Services.AddScoped<ISessao, Sessao>();
 

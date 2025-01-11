@@ -9,10 +9,12 @@ namespace ControleDeContatos.Controllers
     [PaginaParaUsuarioLogado]
     public class ContatoController : Controller
     {
+        private readonly IObservacaoRepositorio _observacaoRepositorio;
         private readonly IContatoRepositorio _contatoRepositorio;
-        public ContatoController(IContatoRepositorio contatoRepositorio)
+        public ContatoController(IContatoRepositorio contatoRepositorio, IObservacaoRepositorio observacaoRepositorio) //IObservacaoRepositorio observacaoRepositorio
         {
             _contatoRepositorio = contatoRepositorio;
+            _observacaoRepositorio = observacaoRepositorio;
         }
         public IActionResult Index()
         {
@@ -27,11 +29,18 @@ namespace ControleDeContatos.Controllers
         public IActionResult Editar(int id)
         {
             ContatoModel contato = _contatoRepositorio.ListarPorId(id);
-            return View(contato);
+
+            
+            var model = new ContatoViewModel();
+            model.Contato = contato;
+            var lista = _observacaoRepositorio.BuscarTodos(id);
+            model.Observacoes = lista;
+            return View(model);
         }
         public IActionResult ApagarConfirmacao(int id)
         {
             ContatoModel contato = _contatoRepositorio.ListarPorId(id);
+
             return View(contato);
 
         }
@@ -78,23 +87,91 @@ namespace ControleDeContatos.Controllers
             }
         }
         [HttpPost]
-        public IActionResult Alterar(ContatoModel contato)
+        public IActionResult Alterar(ContatoViewModel model)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
-                    _contatoRepositorio.Atualizar(contato);
+                    _contatoRepositorio.Atualizar(model.Contato);
                     TempData["MensagemSucesso"] = "Contato alterado com sucesso";
                     return RedirectToAction("Index");
                 }
-                return View("Editar", contato); //forçar view Editar
+                return View("Editar", model); //forçar view Editar
             }
             catch (System.Exception erro)
             {
                 TempData["MensagemErro"] = $"Erro, não conseguimos atualizar seu contato, tente novamente, detalhe do erro:{erro.Message}";
                 return RedirectToAction("Index");
             }
+
         }
+        [HttpPost]
+        public JsonResult CriarObservacao( int txtContatoId,string txtObservacao, DateTime txtDataAtendimento)
+        {
+            ObservacaoModel obj = new ObservacaoModel();
+            obj.Observacao = txtObservacao;
+            obj.DataAtendimento = txtDataAtendimento;
+            obj.ContatoId = txtContatoId;
+            _observacaoRepositorio.Adicionar(obj);
+
+            return Json(txtObservacao);  
+
+        }
+        // Método para exibir a confirmação de exclusão
+        public IActionResult ApagarConfirmacaoObs(int id)
+        {
+            // Recupera a observação pelo ID
+            var observacao = _observacaoRepositorio.ListarPorId(id);
+            if (observacao == null)
+            {
+                return NotFound(); // Caso a observação não seja encontrada
+            }
+
+            // Exibe a confirmação de exclusão
+            return View(observacao);
+        }
+
+        // Método para excluir a observação
+        [HttpPost]
+        public IActionResult ApagarObs(int id)
+        {
+            var observacao = _observacaoRepositorio.ListarPorId(id);
+            if (observacao == null)
+            {
+                return NotFound();
+            }
+
+            // Exclui a observação
+            _observacaoRepositorio.ApagarObs(id);
+
+            // Após a exclusão, redireciona para a página de edição do contato
+            return RedirectToAction("Editar", new { id = observacao.ContatoId });
+        }
+        // Método para exibir o formulário de edição
+        public IActionResult EditarObservacao(int id)
+        {
+            var observacao = _observacaoRepositorio.ListarPorId(id);
+            if (observacao == null)
+            {
+                return NotFound();
+            }
+
+            return View(observacao);
+        }
+
+        // Método para atualizar a observação
+        [HttpPost]
+        public IActionResult EditarObservacao(ObservacaoModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                _observacaoRepositorio.Atualizar(model);
+                return RedirectToAction("Editar", new { id = model.ContatoId });
+            }
+
+            return View(model);
+        }
+
     }
 }

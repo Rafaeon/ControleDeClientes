@@ -44,3 +44,28 @@ function getDataTable(id) {
         }
     });
 }
+
+function stringEscape(s) {
+    return s ? s.replace(/\\/g, '\\\\') : s;
+    function hex(c) { var v = '0' + c.charCodeAt(0).toString(16); return '\\x' + v.substr(v.length - 2); }
+}
+$.fn.AjaxPostCustom = function (url, textData, isAsync, callbackSuccess) {
+
+    $.ajax({
+        type: "POST",
+        url: url,
+        data: stringEscape(textData),
+        dataType: "json",
+        contentType: 'application/json; charset=utf-8',
+        processData: false,
+        success: function (result) {
+            callbackSuccess(result);
+            location.reload();
+        },
+
+        async: isAsync,
+        //error: function (xhr, ajaxOptions, thrownError) { alert(xhr.responseText); }
+        error: function (xhr, ajaxOptions, thrownError) {
+        }
+    });
+};

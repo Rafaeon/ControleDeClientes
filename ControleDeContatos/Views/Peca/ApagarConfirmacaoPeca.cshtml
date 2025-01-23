@@ -1,0 +1,26 @@
+﻿@model PecaModel
+
+@{
+    ViewData["Title"] = "Confirmação de Exclusão";
+}
+
+<div class="container mt-5">
+    <div class="text-center shadow p-4 rounded bg-light">
+        <h3 class="text-danger mb-4">Deseja realmente excluir esta peça?</h3>
+
+        <p class="fs-5"><strong>Peça:</strong> @Model.Nome</p>
+
+        <form asp-action="Apagar" method="post" class="mt-4">
+            <input type="hidden" name="id" value="@Model.Id" />
+
+            <div class="d-flex justify-content-center gap-3">
+                <button type="submit" class="btn btn-danger px-4">
+                    <i class="fas fa-trash-alt"></i> Sim, excluir
+                </button>
+                <a class="btn btn-secondary px-4" asp-controller="Peca" asp-action="Index" asp-route-id="@Model.ContatoId">
+                    <i class="fas fa-times"></i> Cancelar
+                </a>
+            </div>
+        </form>
+    </div>
+</div>

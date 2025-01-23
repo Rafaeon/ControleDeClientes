@@ -1,0 +1,60 @@
+﻿@model ContatoViewModel
+
+@{
+    ViewData["Title"] = "Peças do Cliente";
+}
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2 class="text-primary">Peças do Cliente: @Model.Contato.Nome</h2>
+        <div>
+            <a class="btn btn-primary me-2" asp-action="Criar" asp-route-contatoId="@Model.Contato.Id">
+                <i class="fas fa-plus"></i> Adicionar Peça
+            </a>
+            <a class="btn btn-secondary" asp-controller="Contato" asp-action="Editar" asp-route-id="@Model.Contato.Id">
+                <i class="fas fa-arrow-left"></i> Voltar
+            </a>
+        </div>
+    </div>
+
+    @if (Model.Pecas.Any())
+    {
+        <table class="table table-striped table-hover shadow-sm">
+            <thead class="table-dark">
+                <tr>
+                    <th>#</th>
+                    <th>Categoria</th>
+                    <th>Nome</th>
+                    <th>Qtd. Peças</th>
+                    <th>Data de Garantia</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var peca in Model.Pecas)
+                {
+                    <tr>
+                        <td>@peca.Id</td>
+                        <td>@peca.CategoriaPeca</td>
+                        <td>@peca.Nome</td>
+                        <td>@peca.QTDPeca</td>
+                        <td>@peca.DataGarantia?.ToString("dd/MM/yyyy")</td>
+                        <td>
+                            <a class="btn btn-sm btn-warning me-2" asp-action="EditarPeca" asp-route-id="@peca.Id">
+                                <i class="fas fa-edit"></i> Editar
+                            </a>
+                            <a class="btn btn-sm btn-danger" asp-action="ApagarConfirmacaoPeca" asp-route-id="@peca.Id">
+                                <i class="fas fa-trash-alt"></i> Apagar
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <div class="alert alert-info text-center">
+            <strong>Não há peças cadastradas para este cliente.</strong>
+        </div>
+    }
+</div>

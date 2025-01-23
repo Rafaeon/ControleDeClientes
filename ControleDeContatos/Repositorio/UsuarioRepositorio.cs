@@ -14,6 +14,10 @@ namespace ControleDeContatos.Repositorio
         {
             return _bancoContext.Usuarios.FirstOrDefault(x => x.Login.ToUpper() == login.ToUpper());
         }
+        public UsuarioModel BuscarPorEmailELogin(string email, string login)
+        {
+            return _bancoContext.Usuarios.FirstOrDefault(x => x.Email.ToUpper() == email.ToUpper() && x.Login.ToUpper() == login.ToUpper());
+        }
         public UsuarioModel ListarPorId(int id)
         {
             return _bancoContext.Usuarios.FirstOrDefault(x => x.Id == id);
@@ -51,6 +55,26 @@ namespace ControleDeContatos.Repositorio
             return usuarioDB;
         }
 
+        public UsuarioModel AlterarSenha(AlterarSenhaModel alterarSenhaModel)
+        {
+            UsuarioModel usuarioDB = ListarPorId(alterarSenhaModel.Id);
+            
+            if(usuarioDB == null) throw new Exception("Houve um erro na atualização da Senha, usuario não encontrado");
+
+            if(usuarioDB.SenhaValida(alterarSenhaModel.SenhaAtual)) throw new Exception("Senha atual não confere");
+
+            if(usuarioDB.SenhaValida(alterarSenhaModel.NovaSenha)) throw new Exception("Nova senha deve ser diferente da senha atual");
+
+            usuarioDB.SetNovaSenha(alterarSenhaModel.NovaSenha);
+            usuarioDB.DataAtualizacao = DateTime.Now;
+
+            _bancoContext.Usuarios.Update(usuarioDB);
+            _bancoContext.SaveChanges();
+
+            return usuarioDB;
+        }
+
+
         public bool Apagar(int id)
         {
             UsuarioModel usuarioDB = ListarPorId(id);
@@ -64,6 +88,6 @@ namespace ControleDeContatos.Repositorio
 
         }
 
-        
+       
     }
 }

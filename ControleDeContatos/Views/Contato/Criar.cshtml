@@ -1,4 +1,5 @@
-﻿@model ContatoModel
+﻿@using ControleDeContatos.Enums
+@model ContatoModel
 @{
     ViewData["Title"] = "Criar contato";
 }
@@ -26,6 +27,25 @@
         <label for="celular">Celular</label>
         <input type="text" asp-for="Celular" class="form-control" placeholder="Digite o Celular do contato">
         @Html.ValidationMessageFor(x => x.Celular)
+    </div>
+    <div class="form-group">
+        <label for="endereco">Endereço</label>
+        <input type="text" asp-for="Endereco" class="form-control" placeholder="Digite o endereço do contato">
+        @Html.ValidationMessageFor(x => x.Endereco)
+    </div>
+    <div class="form-group">
+        <label for="nome" class="form-control">Situacao</label>
+        <select asp-for="Situacao" class="form-control">
+            <option value="">Selecione</option>
+            <option value="@SituacaoCliente.Contrato">Contrato</option>
+            <option value="@SituacaoCliente.Avulso">Avulso</option>
+        </select>
+        @Html.ValidationMessageFor(x => x.Situacao)
+    </div>
+    <div class="form-group">
+        <label for="datadegarantia">Data de garantia</label>
+        <input type="datetime-local" asp-for="DataDeGarantia" class="form-control" placeholder="Digite a próxima data de Atendimento">
+        @Html.ValidationMessageFor(x => x.DataDeGarantia)
     </div>
     <br />
     <button type="submit" class="btn btn-primary">Adicionar</button>

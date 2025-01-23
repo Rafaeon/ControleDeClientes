@@ -1,0 +1,42 @@
+﻿@model PecaModel
+
+<div class="container mt-4">
+    <h2 class="text-primary mb-4">Cadastrar Nova Peça</h2>
+
+    <form asp-action="Criar" method="post" class="shadow p-4 rounded bg-light">
+        <input type="hidden" asp-for="ContatoId" value="@Model.ContatoId" />
+
+        <div class="mb-3">
+            <label for="CategoriaPeca" class="form-label">Categoria da Peça</label>
+            <input type="text" asp-for="CategoriaPeca" class="form-control" placeholder="Ex.: Elétrica, Mecânica" />
+            <small class="text-danger">@Html.ValidationMessageFor(x => x.CategoriaPeca)</small>
+        </div>
+
+        <div class="mb-3">
+            <label for="Nome" class="form-label">Nome</label>
+            <input type="text" asp-for="Nome" class="form-control" placeholder="Ex.: Parafuso, Bateria" />
+            <small class="text-danger">@Html.ValidationMessageFor(x => x.Nome)</small>
+        </div>
+
+        <div class="mb-3">
+            <label for="DataGarantia" class="form-label">Data de Garantia</label>
+            <input type="datetime-local" asp-for="DataGarantia" class="form-control" />
+            <small class="text-danger">@Html.ValidationMessageFor(x => x.DataGarantia)</small>
+        </div>
+
+        <div class="mb-3">
+            <label for="QTDPeca" class="form-label">Quantidade de Peças</label>
+            <input type="number" asp-for="QTDPeca" class="form-control" placeholder="Ex.: 10, 20" />
+            <small class="text-danger">@Html.ValidationMessageFor(x => x.QTDPeca)</small>
+        </div>
+
+        <div class="d-flex justify-content-between mt-4">
+            <button type="submit" class="btn btn-success px-4">
+                <i class="fas fa-save"></i> Salvar
+            </button>
+            <a class="btn btn-secondary px-4" asp-controller="Peca" asp-action="Index" asp-route-id="@Model.ContatoId">
+                <i class="fas fa-arrow-left"></i> Voltar
+            </a>
+        </div>
+    </form>
+</div>

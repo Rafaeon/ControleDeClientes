@@ -1,6 +1,7 @@
 ﻿using ControleDeContatos.Enums;
 using ControleDeContatos.Helper;
 using System.ComponentModel.DataAnnotations;
+using System.Globalization;
 
 namespace ControleDeContatos.Models
 {
@@ -29,6 +30,16 @@ namespace ControleDeContatos.Models
         public void SetSenhaHash()
         {
             Senha = Senha.GerarHash();  
+        }
+        public void SetNovaSenha(string novaSenha)
+        {
+            Senha = novaSenha.GerarHash();
+        }
+        public string GerarNovaSenha()
+        {
+            string novaSenha = Guid.NewGuid().ToString().Substring(0, 8);
+            Senha = novaSenha.GerarHash();
+            return novaSenha;
         }
     }
 }

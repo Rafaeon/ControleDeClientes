@@ -38,6 +38,12 @@ namespace ControleDeContatos.Repositorio
             contatoDB.Nome = contato.Nome;
             contatoDB.Email = contato.Email;
             contatoDB.Celular = contato.Celular;
+            contatoDB.Endereco = contato.Endereco;
+            contatoDB.DataDeGarantia = contato.DataDeGarantia;
+            contatoDB.Situacao = contato.Situacao;
+
+
+
 
             _bancoContext.Contatos.Update(contatoDB);
             _bancoContext.SaveChanges();

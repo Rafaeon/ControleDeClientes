@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using ControleDeContatos.Enums;
 
 namespace ControleDeContatos.Models
 {
@@ -13,7 +14,10 @@ namespace ControleDeContatos.Models
         [Required(ErrorMessage = "Digite o celular do contato")]
         [Phone(ErrorMessage ="O celular informado não é valido!")]
         public string Celular { get; set; }
+        public string? Endereco { get; set; }
+        public DateTime? DataDeGarantia { get; set; }
 
+        public SituacaoCliente? Situacao { get; set; }
 
 
     }

@@ -29,6 +29,8 @@ builder.Services.AddScoped<IPecaRepositorio, PecaRepositorio>();
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 builder.Services.AddScoped<ISessao, Sessao>();
 builder.Services.AddScoped<IEmail, Email>();
+builder.Services.AddScoped<IImagemRepositorio, ImagemRepositorio>();
+
 
 
 

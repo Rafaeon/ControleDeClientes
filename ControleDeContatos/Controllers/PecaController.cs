@@ -13,7 +13,7 @@ namespace ControleDeContatos.Controllers
         {
             _pecaRepositorio = pecaRepositorio;
             _contatoRepositorio = contatoRepositorio;
-        }
+        } 
         [HttpGet]
         public IActionResult Index(int id)
         {

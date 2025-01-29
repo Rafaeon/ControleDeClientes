@@ -13,6 +13,8 @@ namespace ControleDeContatos.Data
         public DbSet<UsuarioModel> Usuarios { get; set; }
         public DbSet<ObservacaoModel> Observacoes { get; set; }
         public DbSet<PecaModel> Pecas { get; set; }
+        public DbSet<ImagemModel> Imagens { get; set; }
+
 
 
 

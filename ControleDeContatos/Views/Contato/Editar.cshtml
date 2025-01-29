@@ -5,9 +5,13 @@
     ViewData["Title"] = "Editar Cliente";
 }
 
-<div class="d-grid gap-2 d-md-flex justify-content-md-start">
-    <a class="btn btn-primary" role="button" asp-controller="Peca" asp-action="Index" asp-route-id="@Model.Contato.Id">Peças</a>
-    <br />
+<div class="d-flex gap-2 mb-3">
+    <a class="btn btn-primary" role="button" asp-controller="Peca" asp-action="Index" asp-route-id="@Model.Contato.Id">
+        Peças
+    </a>
+    <a class="btn btn-primary" role="button" asp-controller="Imagem" asp-action="Index" asp-route-id="@Model.Contato.Id">
+        Documentos
+    </a>
 </div>
 
 <div class="container mt-4">

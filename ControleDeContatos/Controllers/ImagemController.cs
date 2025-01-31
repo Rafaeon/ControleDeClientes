@@ -19,7 +19,6 @@ public class ImagemController : Controller
         _contatoRepositorio = contatoRepositorio;
     }
 
-    // Exibe a view com o formulário de upload
     [HttpGet]
     public IActionResult Index(int id)
     {
@@ -35,7 +34,6 @@ public class ImagemController : Controller
         return View(viewModel);
     }
 
-    // Processa o upload do arquivo e salva no banco de dados
     [HttpPost]
     public async Task<IActionResult> Upload(int contatoId, IFormFile arquivo)
     {
@@ -88,14 +86,12 @@ public class ImagemController : Controller
         return View("Index", viewModel);
     }
 
-    // Faz o download do arquivo
     public IActionResult Download(int id)
     {
         var arquivo = _imagemRepositorio.ObterPorId(id);
 
         if (arquivo != null)
         {
-            // Retorna o arquivo para download
             return File(arquivo.Arquivo, "application/octet-stream", arquivo.Nome);
         }
 

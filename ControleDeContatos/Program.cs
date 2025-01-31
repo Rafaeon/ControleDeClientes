@@ -68,11 +68,9 @@ app.Use(async (context, next) =>
     }
     catch (Exception ex)
     {
-        // Aqui você pode capturar e logar a exceção
         var logger = context.RequestServices.GetRequiredService<ILogger<Program>>();
         logger.LogError(ex, "Erro inesperado durante a requisição");
 
-        // Rethrow para passar o erro para o middleware de erro
         throw;
     }
 });

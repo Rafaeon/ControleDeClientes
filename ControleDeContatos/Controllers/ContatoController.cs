@@ -11,7 +11,7 @@ namespace ControleDeContatos.Controllers
     {
         private readonly IObservacaoRepositorio _observacaoRepositorio;
         private readonly IContatoRepositorio _contatoRepositorio;
-        public ContatoController(IContatoRepositorio contatoRepositorio, IObservacaoRepositorio observacaoRepositorio) //IObservacaoRepositorio observacaoRepositorio
+        public ContatoController(IContatoRepositorio contatoRepositorio, IObservacaoRepositorio observacaoRepositorio) 
         {
             _contatoRepositorio = contatoRepositorio;
             _observacaoRepositorio = observacaoRepositorio;
@@ -118,21 +118,19 @@ namespace ControleDeContatos.Controllers
             return Json(txtObservacao);  
 
         }
-        // Método para exibir a confirmação de exclusão
         public IActionResult ApagarConfirmacaoObs(int id)
         {
-            // Recupera a observação pelo ID
             var observacao = _observacaoRepositorio.ListarPorId(id);
             if (observacao == null)
             {
-                return NotFound(); // Caso a observação não seja encontrada
+                return NotFound(); 
             }
 
-            // Exibe a confirmação de exclusão
+            
             return View(observacao);
         }
 
-        // Método para excluir a observação
+        
         [HttpPost]
         public IActionResult ApagarObs(int id)
         {
@@ -142,13 +140,10 @@ namespace ControleDeContatos.Controllers
                 return NotFound();
             }
 
-            // Exclui a observação
             _observacaoRepositorio.ApagarObs(id);
 
-            // Após a exclusão, redireciona para a página de edição do contato
             return RedirectToAction("Editar", new { id = observacao.ContatoId });
         }
-        // Método para exibir o formulário de edição
         public IActionResult EditarObservacao(int id)
         {
             var observacao = _observacaoRepositorio.ListarPorId(id);
@@ -160,7 +155,6 @@ namespace ControleDeContatos.Controllers
             return View(observacao);
         }
 
-        // Método para atualizar a observação
         [HttpPost]
         public IActionResult EditarObservacao(ObservacaoModel model)
         {

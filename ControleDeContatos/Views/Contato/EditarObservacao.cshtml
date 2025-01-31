@@ -1,19 +1,34 @@
 ﻿@model ObservacaoModel
 
-<h2>Editar Observação</h2>
+@{
+    ViewData["Title"] = "✏️ Editar Observação";
+}
 
-<form asp-action="EditarObservacao" method="post">
-    <div class="form-group">
-        <label for="Observacao">Observação</label>
-        <input type="hidden" asp-for="ContatoId" value="@Model.ContatoId" />
-        <input type="text" asp-for="Observacao" class="form-control" placeholder="Digite a observação">
-        @Html.ValidationMessageFor(x => x.Observacao)
+<div class="container mt-4">
+    <h2 class="mb-4 text-primary">📝 Editar Observação</h2>
+
+    <div class="card shadow-sm mb-4">
+        <div class="card-body">
+            <form asp-action="EditarObservacao" method="post">
+                <input type="hidden" asp-for="ContatoId" value="@Model.ContatoId" />
+
+                <div class="mb-3">
+                    <label for="Observacao" class="form-label">Observação</label>
+                    <input type="text" asp-for="Observacao" class="form-control" placeholder="Digite a observação">
+                    @Html.ValidationMessageFor(x => x.Observacao)
+                </div>
+
+                <div class="mb-3">
+                    <label for="DataAtendimento" class="form-label">Data de Atendimento</label>
+                    <input type="datetime-local" asp-for="DataAtendimento" class="form-control" />
+                    @Html.ValidationMessageFor(x => x.DataAtendimento)
+                </div>
+
+                <div class="d-flex justify-content-between">
+                    <button type="submit" class="btn btn-success">Salvar Alterações</button>
+                    <a class="btn btn-secondary" asp-action="Editar" asp-route-id="@Model.ContatoId">Cancelar</a>
+                </div>
+            </form>
+        </div>
     </div>
-    <div class="form-group">
-        <label for="DataAtendimento">Data Atendimento</label>
-        <input type="datetime-local" asp-for="DataAtendimento" class="form-control" />
-        @Html.ValidationMessageFor(x => x.DataAtendimento)
-    </div>
-    <button type="submit" class="btn btn-primary">Salvar</button>
-    <a class="btn btn-secondary" asp-action="Editar" asp-route-id="@Model.ContatoId">Cancelar</a>
-</form>
+</div>

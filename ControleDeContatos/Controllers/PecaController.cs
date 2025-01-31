@@ -20,13 +20,12 @@ namespace ControleDeContatos.Controllers
             var contato = _contatoRepositorio.ListarPorId(id);
             if (contato == null)
             {
-                return RedirectToAction("Index", "Contato"); // Redirecione para a listagem de contatos ou outra página relevante.
-            }
+                return RedirectToAction("Index", "Contato");             }
 
             var model = new ContatoViewModel
             {
                 Contato = contato,
-                Pecas = _pecaRepositorio.BuscarPorId(id) // Adicione as peças ao modelo.
+                Pecas = _pecaRepositorio.BuscarPorId(id) 
             };
 
             return View(model);

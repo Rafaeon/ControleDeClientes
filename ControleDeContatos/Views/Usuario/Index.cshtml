@@ -5,13 +5,12 @@
 
 <div class="container mt-5">
     <div class="d-flex justify-content-between align-items-center mb-4">
-        <h2 class="text-primary">Listagem de Usuários</h2>
+        <h2 class="text-primary">📑 Listagem de Usuários</h2>
         <a class="btn btn-success" role="button" asp-controller="Usuario" asp-action="Criar">
             <i class="fas fa-user-plus"></i> Adicionar Usuário
         </a>
     </div>
 
-    <!-- Mensagens de sucesso/erro -->
     @if (TempData["MensagemSucesso"] != null)
     {
         <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -28,7 +27,7 @@
         </div>
     }
 
-    <!-- Tabela de usuários -->
+
     <table class="table table-hover table-striped shadow-sm" id="table-usuarios">
         <thead class="table-dark">
             <tr>
